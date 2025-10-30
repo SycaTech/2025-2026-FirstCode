@@ -27,6 +27,12 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is the Tuning class. It contains a selection menu for various tuning OpModes.
+ *
+ * @author Baron Henderson - 20077 The Indubitables
+ * @version 1.0, 6/26/2025
+ */
 @Configurable
 @TeleOp(name = "Tuning", group = "Pedro Pathing")
 public class Tuning extends SelectableOpMode {
@@ -881,7 +887,7 @@ class DriveTuner extends OpMode {
     public void start() {
         follower.deactivateAllPIDFs();
         follower.activateDrive();
-
+        
         forwards = follower.pathBuilder()
                 .setGlobalDeceleration()
                 .addPath(new BezierLine(new Pose(0,0), new Pose(DISTANCE,0)))
