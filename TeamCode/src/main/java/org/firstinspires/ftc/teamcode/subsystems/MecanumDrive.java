@@ -4,11 +4,13 @@ import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
-import com.qualcomm.robotcore.robocol.Command;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
-public class MecanumDriveSubsystem {
+import dev.nextftc.core.commands.Command;
+import dev.nextftc.core.commands.utility.InstantCommand;
+
+public class MecanumDrive {
 
     private DcMotor frontLeftMotor;
     private DcMotor frontRightMotor;
@@ -16,7 +18,7 @@ public class MecanumDriveSubsystem {
     private DcMotor backRightMotor;
     private IMU imu;
 
-    public MecanumDriveSubsystem(DcMotor frontLeftMotor, DcMotor frontRightMotor, DcMotor backLeftMotor
+    public MecanumDrive(DcMotor frontLeftMotor, DcMotor frontRightMotor, DcMotor backLeftMotor
             , DcMotor backRightMototr) {
         this.frontLeftMotor = frontLeftMotor;
         this.frontRightMotor = frontRightMotor;
@@ -76,6 +78,9 @@ public class MecanumDriveSubsystem {
 
         this.drive(newForward, newStrafe, rotate);
 
+    }
+    public Command resetYaw(){
+        return new InstantCommand(()-> imu.resetYaw());
     }
 
 }
