@@ -15,7 +15,5 @@ public class Constants {
         return new FollowerBuilder(followerConstants, hardwareMap)
                 .pathConstraints(pathConstraints)
                 .build();
-
     }
-
 }
