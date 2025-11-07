@@ -7,7 +7,7 @@ import dev.nextftc.control.ControlSystem;
 
 public class Baseckimb {
     private DcMotorEx basemotor;
-    
+    new ResetEncoder(DcMotorEx, this)
 
 
     private ControlSystem controlSystem = ControlSystem.builder()
