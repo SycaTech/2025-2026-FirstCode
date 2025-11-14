@@ -5,5 +5,5 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class Shooting {
     private DcMotorEx shootmotor;
-    private Servo shootservo
+    private Servo shootservo;
 }
