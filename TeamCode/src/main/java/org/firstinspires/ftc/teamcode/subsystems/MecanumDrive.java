@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -39,7 +41,7 @@ public class MecanumDrive {
         frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        imu = hwMap.get(IMU.class, "inu");
+        imu = hwMap.get(IMU.class, "imu");
 
     RevHubOrientationOnRobot RevOrientation = new RevHubOrientationOnRobot(
             RevHubOrientationOnRobot.LogoFacingDirection.UP,
@@ -78,9 +80,8 @@ public class MecanumDrive {
 
         this.drive(newForward, newStrafe, rotate);
 
-    }
-    public Command resetYaw(){
-        return new InstantCommand(()-> imu.resetYaw());
+
+
     }
 
 }
