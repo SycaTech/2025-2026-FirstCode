@@ -1,16 +1,15 @@
 package org.firstinspires.ftc.teamcode;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import dev.nextftc.core.components.BindingsComponent;
 import dev.nextftc.core.components.SubsystemComponent;
-import dev.nextftc.ftc.NextFTCOpMode;
-import dev.nextftc.ftc.components.BulkReadComponent;
 
 import static dev.nextftc.bindings.Bindings.*;
-
-import org.firstinspires.ftc.teamcode.LiftShoulder;
 
 
 @TeleOp(name = "LiftShoulder TeleOp", group = "nextftc")
@@ -22,13 +21,6 @@ public class LiftShoulderTeleOp extends NextFTCOpMode {
                 BindingsComponent.INSTANCE,
                 BulkReadComponent.INSTANCE
         );
-    }
-
-    @Override
-    public void onInit(){
-        super.onInit();
-        LiftShoulder.INSTANCE.motorLeft = hardwareMap.get(DcMotorEx.class, LiftShoulder.INSTANCE.MOTOR_LEFT_NAME);
-        LiftShoulder.INSTANCE.motorRight = hardwareMap.get(DcMotorEx.class, LiftShoulder.INSTANCE.MOTOR_RIGHT_NAME);
     }
 
     @Override

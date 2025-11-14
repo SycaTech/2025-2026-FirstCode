@@ -2,13 +2,13 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import dev.nextftc.control.ControlSystem;
+import dev.nextftc.core.commands.Command;
+import dev.nextftc.core.commands.utility.InstantCommand;
 
 public class Baseckimb {
     private DcMotorEx basemotor;
-    double velocity = basemotor.getVelocity();
+
     double setpoint = 800;
 
 
@@ -18,12 +18,30 @@ public class Baseckimb {
         return basemotor.getCurrentPosition();
     }
 
-    public void setTargetPosition(int ticks) {
-        setpoint = ticks;
-        basemotor.setTargetPosition(ticks);
-        basemotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        basemotor.setPower(1.0);
+    int ticks;
+    public double setSetpoint() {
+        return setpoint = ticks;
     }
+
+
+
+    public Command settarget(){
+       return new InstantCommand(() -> {
+            basemotor.setTargetPosition(ticks);
+        });
+    };
+    public Command setmode(){
+        return new InstantCommand(() -> {
+            new RunToPosition(basemotor, ticks, this);
+
+        });
+    };
+    public Command power(){
+       return new InstantCommand(() -> {
+            basemotor.setPower(1.0);
+        });
+    };
+
 
 
 

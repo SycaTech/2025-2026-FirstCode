@@ -1,11 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
+
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+
 import dev.nextftc.control.ControlSystem;
 import dev.nextftc.core.commands.Command;
 import dev.nextftc.core.subsystems.Subsystem;
-import dev.nextftc.hardware.controllable.RunToPosition;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 public class LiftShoulder implements Subsystem {
 
@@ -14,8 +15,8 @@ public class LiftShoulder implements Subsystem {
     public final String MOTOR_LEFT_NAME = "Master";
     public final String MOTOR_RIGHT_NAME = "Slave";
 
-    public DcMotorEx motorLeft;
-    public DcMotorEx motorRight;
+    public DcMotor motorLeft;
+    public DcMotor motorRight;
 
     public static final double POSE_LOW = -200;
     public static final double POSE_MIDDLE = 0;
