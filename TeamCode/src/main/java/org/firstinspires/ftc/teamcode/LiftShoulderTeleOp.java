@@ -9,21 +9,21 @@ import dev.nextftc.ftc.NextFTCOpMode;
 import dev.nextftc.ftc.components.BulkReadComponent;
 
 import static dev.nextftc.bindings.Bindings.*;
+import static dev.nextftc.bindings.Bindings.button;
 
 import org.firstinspires.ftc.teamcode.subsystems.LiftShoulder;
 
 @TeleOp(name = "LiftShoulder TeleOp", group = "nextftc")
 public class LiftShoulderTeleOp extends NextFTCOpMode {
 
-
-
     public LiftShoulderTeleOp() {
-         addComponents(
-                 new SubsystemComponent(LiftShoulder.INSTANCE),
-                 BindingsComponent.INSTANCE,
-                 BulkReadComponent.INSTANCE
+        addComponents(
+                new SubsystemComponent(LiftShoulder.INSTANCE),
+                BulkReadComponent.INSTANCE,
+                BindingsComponent.INSTANCE
         );
     }
+
 
     @Override
     public void onStartButtonPressed(){
