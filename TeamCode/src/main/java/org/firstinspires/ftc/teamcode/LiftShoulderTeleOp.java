@@ -5,20 +5,23 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gam
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import dev.nextftc.core.components.BindingsComponent;
 import dev.nextftc.core.components.SubsystemComponent;
+import dev.nextftc.ftc.NextFTCOpMode;
+import dev.nextftc.ftc.components.BulkReadComponent;
+
 import static dev.nextftc.bindings.Bindings.*;
 
 import org.firstinspires.ftc.teamcode.subsystems.LiftShoulder;
 
 @TeleOp(name = "LiftShoulder TeleOp", group = "nextftc")
-public class LiftShoulderTeleOp extends NextFTCOpmode {
+public class LiftShoulderTeleOp extends NextFTCOpMode {
 
 
 
     public LiftShoulderTeleOp() {
-        clone(
-                new SubsystemComponent(LiftShoulder.INSTANCE),
-                BindingsComponent.INSTANCE,
-                BulkReadComponent.INSTANCE
+         addComponents(
+                 new SubsystemComponent(LiftShoulder.INSTANCE),
+                 BindingsComponent.INSTANCE,
+                 BulkReadComponent.INSTANCE
         );
     }
 
