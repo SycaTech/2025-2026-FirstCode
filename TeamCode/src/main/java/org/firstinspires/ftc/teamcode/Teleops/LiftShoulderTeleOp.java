@@ -1,6 +1,4 @@
-package org.firstinspires.ftc.teamcode;
-
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
+package org.firstinspires.ftc.teamcode.Teleops;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import dev.nextftc.core.components.BindingsComponent;
@@ -8,7 +6,6 @@ import dev.nextftc.core.components.SubsystemComponent;
 import dev.nextftc.ftc.NextFTCOpMode;
 import dev.nextftc.ftc.components.BulkReadComponent;
 
-import static dev.nextftc.bindings.Bindings.*;
 import static dev.nextftc.bindings.Bindings.button;
 
 import org.firstinspires.ftc.teamcode.subsystems.LiftShoulder;

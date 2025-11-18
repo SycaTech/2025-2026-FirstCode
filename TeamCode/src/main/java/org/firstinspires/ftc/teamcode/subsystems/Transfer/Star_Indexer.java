@@ -1,33 +1,47 @@
 package org.firstinspires.ftc.teamcode.subsystems.Transfer;
 
-import com.qualcomm.robotcore.hardware.ControlSystem;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import dev.nextftc.control.ControlSystem;
+import dev.nextftc.core.commands.Command;
+import dev.nextftc.core.commands.utility.InstantCommand;
 import dev.nextftc.core.subsystems.Subsystem;
 import dev.nextftc.hardware.impl.MotorEx;
 
-public class Star_Indexer implements Subsystem {
-    public static final Star_Indexer INSTANCE = new Star_Indexer();
+public class Star_Indexer{
+    private DcMotor starMotor;
 
-    public final String rotateMotorName = "Star Motor";
-
-    public DcMotor starMotor;
-
-    public static final double BALL1 = 90;
-    public static final double BALL2 = 180;
-    public static final double BALL3 = 270;
-
-    private Star_Indexer() {
-        starMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
+    public void init(HardwareMap hwMap) {
+        starMotor = hwMap.get(DcMotor.class, "Star Indexer");
         starMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        starMotor.setPower(0);
     }
 
-    public ControlSystem controlSystem = ControlSystem.builder()
-            .posPid()
+    public static final int BALL1 = 90;
+    public static final int BALL2 = 180;
+    public static final int BALL3 = 270;
 
+    public ControlSystem controlSystem = ControlSystem.builder()
+            .posPid(0,0,0)
+            .elevatorFF(0)
+            .build();
+
+    public Command Ball1(){
+        return new InstantCommand(() ->{
+           starMotor.setTargetPosition(BALL1);
+        });
+    }
+
+    public Command Ball2(){
+        return new InstantCommand(() ->{
+            starMotor.setTargetPosition(BALL2);
+        });
+    }
+
+    public Command Ball3(){
+        return new InstantCommand(() ->{
+            starMotor.setTargetPosition(BALL3);
+        });
+    }
 }
