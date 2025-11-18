@@ -1,10 +1,8 @@
-package org.firstinspires.ftc.teamcode.subsystems;
+package org.firstinspires.ftc.teamcode.subsystems.Transfer;
 
 
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import dev.nextftc.core.commands.Command;
 import dev.nextftc.core.commands.delays.Delay;
@@ -22,8 +20,7 @@ public class Transfer {
 
     }
    public void power(){
-                rotateMotor.setPower(1.0);
-
+        rotateMotor.setPower(1.0);
     }
 
     public Command toShoot() {

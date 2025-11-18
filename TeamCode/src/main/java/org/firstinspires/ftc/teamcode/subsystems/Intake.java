@@ -14,7 +14,6 @@ public class Intake implements Subsystem {
 
     public void init(HardwareMap hwMap) {
         intakeMotor =hwMap.get(DcMotorEx.class, "intakeMotor");
-
     }
     public Command power(){
         return new InstantCommand(() -> {
