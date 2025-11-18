@@ -1,16 +1,51 @@
 package org.firstinspires.ftc.teamcode;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-
 import dev.nextftc.core.components.BindingsComponent;
 import dev.nextftc.core.components.SubsystemComponent;
+import dev.nextftc.ftc.NextFTCOpMode;
+import dev.nextftc.ftc.components.BulkReadComponent;
 
 import static dev.nextftc.bindings.Bindings.*;
+import static dev.nextftc.bindings.Bindings.button;
 
+import org.firstinspires.ftc.teamcode.subsystems.LiftShoulder;
+
+@TeleOp(name = "LiftShoulder TeleOp", group = "nextftc")
+public class LiftShoulderTeleOp extends NextFTCOpMode {
+
+    public LiftShoulderTeleOp() {
+        addComponents(
+                new SubsystemComponent(LiftShoulder.INSTANCE),
+                BulkReadComponent.INSTANCE,
+                BindingsComponent.INSTANCE
+        );
+    }
+
+
+    @Override
+    public void onStartButtonPressed(){
+        button(() -> gamepad1.a)
+                .whenBecomesTrue(LiftShoulder.INSTANCE.toLow());
+        button(() -> gamepad1.b)
+                .whenBecomesTrue(LiftShoulder.INSTANCE.toMiddle());
+        button(() -> gamepad1.y)
+                .whenBecomesTrue(LiftShoulder.INSTANCE.toHigh());
+
+        button(() -> gamepad1.x)
+                .whenBecomesTrue(LiftShoulder.INSTANCE.toSetPoint(250));
+    }
+}
+
+/*package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import dev.nextftc.core.components.BindingsComponent;
+import dev.nextftc.core.components.SubsystemComponent;
+import static dev.nextftc.bindings.Bindings.*;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 @TeleOp(name = "LiftShoulder TeleOp", group = "nextftc")
 public class LiftShoulderTeleOp extends NextFTCOpMode {
@@ -23,16 +58,23 @@ public class LiftShoulderTeleOp extends NextFTCOpMode {
         );
     }
 
+    // אתחול החומרה מועבר ל-onInit, שם ה-hardwareMap זמין ופעיל
+    @Override
+    public void onInit() {
+        LiftShoulder.INSTANCE.initHardware(hardwareMap);
+    }
+
     @Override
     public void onStartButtonPressed(){
+        // כאשר הכפתור נלחץ (whenBecomesTrue), הפקודה מתחילה לרוץ
         button(() -> gamepad1.a)
-                .whenBecomesTrue(LiftShoulder.INSTANCE.toLow);
+                .whenBecomesTrue(LiftShoulder.INSTANCE.toLow());
         button(() -> gamepad1.b)
-                .whenBecomesTrue(LiftShoulder.INSTANCE.toMiddle);
+                .whenBecomesTrue(LiftShoulder.INSTANCE.toMiddle());
         button(() -> gamepad1.y)
-                .whenBecomesTrue(LiftShoulder.INSTANCE.toHigh);
+                .whenBecomesTrue(LiftShoulder.INSTANCE.toHigh());
 
         button(() -> gamepad1.x)
                 .whenBecomesTrue(LiftShoulder.INSTANCE.toSetPoint(250));
     }
-}
+}*/
