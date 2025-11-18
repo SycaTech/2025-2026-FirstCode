@@ -6,21 +6,21 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import dev.nextftc.core.components.BindingsComponent;
 import dev.nextftc.core.components.SubsystemComponent;
 import static dev.nextftc.bindings.Bindings.*;
+import static dev.nextftc.bindings.Bindings.button;
 
 import org.firstinspires.ftc.teamcode.subsystems.LiftShoulder;
 
 @TeleOp(name = "LiftShoulder TeleOp", group = "nextftc")
 public class LiftShoulderTeleOp extends NextFTCOpmode {
 
-
-
     public LiftShoulderTeleOp() {
-        clone(
+        addComponents(
                 new SubsystemComponent(LiftShoulder.INSTANCE),
-                BindingsComponent.INSTANCE,
-                BulkReadComponent.INSTANCE
+                BulkReadComponent.INSTANCE,
+                BindingsComponent.INSTANCE
         );
     }
+
 
     @Override
     public void onStartButtonPressed(){
