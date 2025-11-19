@@ -11,16 +11,23 @@ import dev.nextftc.core.subsystems.Subsystem;
 import dev.nextftc.hardware.impl.MotorEx;
 
 public class Star_Indexer{
-    private DcMotor starMotor;
-
-    public void init(HardwareMap hwMap) {
-        starMotor = hwMap.get(DcMotor.class, "Star Indexer");
-        starMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
+    private MotorEx starMotor;
 
     public static final int BALL1 = 90;
     public static final int BALL2 = 180;
     public static final int BALL3 = 270;
+
+    public void init(HardwareMap hwMap) {
+        starMotor = hwMap.get(MotorEx.class, "Star Indexer");
+
+        starMotor.resetEncoder();
+
+        // Enable position control
+        starMotor.setPositionPIDFCoefficients(0.01, 0, 0, 0);
+
+        // Optional: limit max power the PID can use
+        starMotor.setMaxPower(1.0);
+    }
 
     public ControlSystem controlSystem = ControlSystem.builder()
             .posPid(0,0,0)

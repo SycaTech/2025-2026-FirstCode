@@ -13,7 +13,7 @@ public class Shooter {
         Shooter = hwMap.get(DcMotor.class, "Shooter");
     }
 
-    public Command shooter() {
+    public Command Shoot() {
         return new InstantCommand(() -> {
            Shooter.setPower(1);
         });

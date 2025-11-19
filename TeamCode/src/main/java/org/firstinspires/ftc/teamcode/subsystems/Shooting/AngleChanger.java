@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import dev.nextftc.core.commands.Command;
+import dev.nextftc.core.commands.utility.InstantCommand;
 
 public class AngleChanger {
     private Servo AngleChangeServo;
@@ -16,5 +17,7 @@ public class AngleChanger {
         AngleChangeServo.setPosition(angle);
     }
 
-    public Command changeAngle
+    public Command changeAngle(double angle) {
+        return new InstantCommand(() -> AngleChangeServo.setPosition(angle));
+    }
 }
