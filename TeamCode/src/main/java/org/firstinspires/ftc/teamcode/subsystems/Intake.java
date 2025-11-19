@@ -10,14 +10,17 @@ import dev.nextftc.core.subsystems.Subsystem;
 import dev.nextftc.hardware.impl.MotorEx;
 
 public class Intake implements Subsystem {
-    private DcMotorEx intakeMotor;
+    private MotorEx Intake;
 
     public void init(HardwareMap hwMap) {
-        intakeMotor =hwMap.get(DcMotorEx.class, "intakeMotor");
+        Intake = hwMap.get(MotorEx.class, "Intake");
     }
-    public Command power(){
+
+    public Command Intake(double power) {
         return new InstantCommand(() -> {
-            intakeMotor.setPower(1.0);
+            Intake.setPower(power);
         });
-    };
+    }
+
+
 }
