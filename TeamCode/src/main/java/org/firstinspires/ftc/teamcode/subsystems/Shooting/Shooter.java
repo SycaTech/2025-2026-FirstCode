@@ -5,12 +5,13 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import dev.nextftc.core.commands.Command;
 import dev.nextftc.core.commands.utility.InstantCommand;
+import dev.nextftc.hardware.impl.MotorEx;
 
 public class Shooter {
-    private DcMotor Shooter;
+    private MotorEx Shooter;
 
     public void init(HardwareMap hwMap) {
-        Shooter = hwMap.get(DcMotor.class, "Shooter");
+        Shooter = hwMap.get(MotorEx.class, "Shooter");
     }
 
     public Command Shoot() {
