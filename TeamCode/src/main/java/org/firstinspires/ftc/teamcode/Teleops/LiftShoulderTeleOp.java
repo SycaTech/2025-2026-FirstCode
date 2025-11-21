@@ -25,7 +25,7 @@ public class LiftShoulderTeleOp extends OpMode {
     public void loop() {
 //        liftShoulder.periodic();
 
-        liftShoulder.power();
+        liftShoulder.power(0.5);
 
 //        Button Y = button(() -> gamepad1.y);
 //        Y.whenBecomesTrue(() -> liftShoulder.toHigh().schedule());

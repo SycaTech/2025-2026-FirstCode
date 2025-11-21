@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
-
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -9,51 +7,47 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import dev.nextftc.control.ControlSystem;
 import dev.nextftc.core.commands.Command;
-import dev.nextftc.core.commands.groups.ParallelGroup;
 import dev.nextftc.core.commands.utility.InstantCommand;
+import dev.nextftc.core.subsystems.Subsystem;
 import dev.nextftc.hardware.impl.MotorEx;
 
-public class LiftShoulder{
+public class LiftShoulder implements Subsystem {
     Telemetry telemetry;
 
-    private MotorEx LiftShoulderL;
-    private MotorEx LiftShoulderR;
+    private MotorEx Master;
+    private MotorEx Slave;
 
     public static final int POSE_LOW = 0;
     public static final int POSE_MIDDLE = 500;
     public static final int POSE_HIGH = 1200;
 
     public void init(HardwareMap hwMap) {
-        LiftShoulderL = new MotorEx(hwMap.get(DcMotorEx.class, "Master"));
-        LiftShoulderR = new MotorEx(hwMap.get(DcMotorEx.class, "Slave"));
+        Master = new MotorEx(hwMap.get(DcMotorEx.class, "Master"));
+        Slave = new MotorEx(hwMap.get(DcMotorEx.class, "Slave"));
+
+        Slave.setPower(Master.getPower());
     }
     public ControlSystem controlSystem = ControlSystem.builder()
-            .posPid(0.0, 0.0, 0.0)
+            .posPid(0.2, 0.0, 0.0)
             .elevatorFF(0.0)
             .build();
 
-    public Command toHigh(){
-        return new InstantCommand(() -> LiftShoulderL.atPosition(POSE_HIGH));
+    public Command tryThis(){
+        return new InstantCommand(() -> Master.setPower(0.2));
     }
     public Command toMiddle(){
-        return new InstantCommand(() -> LiftShoulderL.atPosition(POSE_MIDDLE));
+        return new InstantCommand(() -> Master.atPosition(POSE_MIDDLE));
     }
     public Command toLow(){
-        return new InstantCommand(() -> LiftShoulderL.atPosition(POSE_LOW));
+        return new InstantCommand(() -> Master.atPosition(POSE_LOW));
     }
 
     public Command toSetPoint(int setpoint) {
-        return new InstantCommand(()-> LiftShoulderL.atPosition(setpoint));
+        return new InstantCommand(()-> Master.atPosition(setpoint));
     }
 
-    public Command power() {
-        return new ParallelGroup(
-                new InstantCommand(() -> LiftShoulderL.setPower(0.5)),
-                new InstantCommand(() -> LiftShoulderR.setPower(0.5))
-        );
-    }
-
-    public void periodic() {
-        LiftShoulderR.setPower(LiftShoulderL.getPower());
+    public void power(double power){
+        Master.setPower(power);
+        Slave.setPower(power);
     }
 }
