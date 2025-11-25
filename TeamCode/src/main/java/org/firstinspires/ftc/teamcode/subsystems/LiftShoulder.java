@@ -1,69 +1,63 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import dev.nextftc.control.ControlSystem;
+import dev.nextftc.control.KineticState;
 import dev.nextftc.core.commands.Command;
 import dev.nextftc.core.commands.utility.InstantCommand;
 import dev.nextftc.core.subsystems.Subsystem;
+import dev.nextftc.hardware.impl.MotorEx;
 
 public class LiftShoulder implements Subsystem {
+    Telemetry telemetry;
 
-    public static final LiftShoulder INSTANCE = new LiftShoulder();
-
-    public final String MOTOR_LEFT_NAME = "Master";
-    public final String MOTOR_RIGHT_NAME = "Slave";
-
-    public DcMotor motorLeft;
-    public DcMotor motorRight;
-
-    public static final int POSE_LOW = -200;
-    public static final int POSE_MIDDLE = 0;
-    public static final int POSE_HIGH = 500;
+    private MotorEx Master;
+    private MotorEx Slave;
+    private ControlSystem controller;
 
 
-    private LiftShoulder() {
-        motorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    public static final int POSE_LOW = 0;
+    public static final int POSE_MIDDLE = 500;
+    public static final int POSE_HIGH = 1200;
 
-        motorLeft.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        motorRight.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+    public void init(HardwareMap hwMap) {
+        Master = new MotorEx(hwMap.get(DcMotorEx.class, "Master"));
+        Slave = new MotorEx(hwMap.get(DcMotorEx.class, "Slave"));
 
-        motorRight.setPower(0);
+        Slave.setPower(Master.getPower());
+
+        controller = ControlSystem.builder()
+                .posPid(0.2, 0.0, 0.0)
+                .elevatorFF(0.0)
+                .build();
+
+        controller.setGoal(new KineticState(0.0));
     }
 
-    public ControlSystem controlSystem = ControlSystem.builder()
-            .posPid(0.005, 0.0001, 0.0)
-            .elevatorFF(0.1)
-            .build();
+    public void goToPosition(double toPose) {
+        controller.setGoal(new KineticState(toPose));
+    }
 
-//    public Command toMiddle = new RunToPosition(controlSystem, POSE_MIDDLE);
-//    public Command toHigh = new RunToPosition(controlSystem, POSE_HIGH);
-//
     public Command toHigh(){
-        return new InstantCommand(() -> {
-            motorLeft.setTargetPosition(POSE_HIGH);
-        });
+        return new InstantCommand(() -> goToPosition(POSE_HIGH));
     }
     public Command toMiddle(){
-        return new InstantCommand(() -> {
-            motorLeft.setTargetPosition(POSE_MIDDLE);
-        });
+        return new InstantCommand(() -> goToPosition(POSE_MIDDLE));
     }
     public Command toLow(){
-        return new InstantCommand(() -> {
-            motorLeft.setTargetPosition(POSE_LOW);
-        });
+        return new InstantCommand(() -> goToPosition(POSE_LOW));
     }
 
     public Command toSetPoint(int setpoint) {
-        return new InstantCommand(()->{motorLeft.setTargetPosition(setpoint);});
+        return new InstantCommand(()-> Master.atPosition(setpoint));
     }
 
-    @Override
-    public void periodic() {
-        motorRight.setPower(motorLeft.getPower());
+    public void power(double power){
+        Master.setPower(power);
+        Slave.setPower(power);
     }
 }

@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import dev.nextftc.core.commands.Command;
@@ -10,15 +8,17 @@ import dev.nextftc.core.subsystems.Subsystem;
 import dev.nextftc.hardware.impl.MotorEx;
 
 public class Intake implements Subsystem {
-    private DcMotorEx intakeMotor;
+    private MotorEx IntakeMotor;
 
     public void init(HardwareMap hwMap) {
-        intakeMotor =hwMap.get(DcMotorEx.class, "intakeMotor");
-
+        IntakeMotor = hwMap.get(MotorEx.class, "Intake");
     }
-    public Command power(){
+
+    public Command intake(double power) {
         return new InstantCommand(() -> {
-            intakeMotor.setPower(1.0);
+            IntakeMotor.setPower(power);
         });
-    };
+    }
+
+
 }

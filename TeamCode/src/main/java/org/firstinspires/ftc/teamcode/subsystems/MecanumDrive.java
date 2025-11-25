@@ -11,35 +11,23 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 import dev.nextftc.core.commands.Command;
 import dev.nextftc.core.commands.utility.InstantCommand;
+import dev.nextftc.hardware.impl.MotorEx;
 
 public class MecanumDrive {
 
-    private DcMotor frontLeftMotor;
-    private DcMotor frontRightMotor;
-    private DcMotor backLeftMotor;
-    private DcMotor backRightMotor;
+    private MotorEx frontLeftMotor,frontRightMotor,backLeftMotor,backRightMotor;
     private IMU imu;
 
-    public MecanumDrive(DcMotor frontLeftMotor, DcMotor frontRightMotor, DcMotor backLeftMotor
-            , DcMotor backRightMototr) {
-        this.frontLeftMotor = frontLeftMotor;
-        this.frontRightMotor = frontRightMotor;
-        this.backLeftMotor = backLeftMotor;
-        this.backRightMotor = backRightMototr;
-    }
-
     public void init(HardwareMap hwMap) {
-        frontLeftMotor = hwMap.get(DcMotor.class, "LF");
-        backLeftMotor = hwMap.get(DcMotor.class, "LR");
-        frontRightMotor = hwMap.get(DcMotor.class, "RF");
-        backRightMotor = hwMap.get(DcMotor.class, "RR");
+        frontLeftMotor = hwMap.get(MotorEx.class, "LF");
+        backLeftMotor = hwMap.get(MotorEx.class, "LR");
+        frontRightMotor = hwMap.get(MotorEx.class, "RF");
+        backRightMotor = hwMap.get(MotorEx.class, "RR");
 
-        frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotor.Direction.REVERSE);
-        frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontLeftMotor = new MotorEx("LF").brakeMode().reversed();
+        backLeftMotor = new MotorEx("LR").brakeMode().reversed();
+        frontRightMotor = new MotorEx("RF").brakeMode();
+        backRightMotor = new MotorEx("RR").brakeMode();
 
         imu = hwMap.get(IMU.class, "imu");
 
@@ -79,9 +67,11 @@ public class MecanumDrive {
         double newStrafe = r * Math.cos(theta);
 
         this.drive(newForward, newStrafe, rotate);
-
-
-
     }
 
+    public Command resetYaw() {
+        return new InstantCommand(() -> {
+            imu.resetYaw();
+        });
+    }
 }
