@@ -12,6 +12,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Constants {
     public static FollowerConstants followerConstants = new FollowerConstants()
+            .useSecondaryTranslationalPIDF(true)
+            .useSecondaryHeadingPIDF(true)
+            .useSecondaryDrivePIDF(true)
             .mass(5);
     public static MecanumConstants driveConstants = new MecanumConstants()
             .maxPower(1)
@@ -35,8 +38,9 @@ public class Constants {
             .rightRearEncoderDirection(Encoder.FORWARD)
             .robotWidth(14.961)
             .robotLength(14.37)
-            .forwardTicksToInches(8.186938634728);
-
+            .forwardTicksToInches(8.186938634728)
+            .strafeTicksToInches(0.10636902875407876)
+            .turnTicksToInches(0.00220241600);
     public static PathConstraints pathConstraints = new PathConstraints(0.99, 100, 1, 1);
 
     public static Follower createFollower(HardwareMap hardwareMap) {
