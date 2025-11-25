@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import dev.nextftc.control.ControlSystem;
+import dev.nextftc.control.KineticState;
 import dev.nextftc.core.commands.Command;
 import dev.nextftc.core.commands.utility.InstantCommand;
 import dev.nextftc.core.subsystems.Subsystem;
@@ -16,6 +17,8 @@ public class LiftShoulder implements Subsystem {
 
     private MotorEx Master;
     private MotorEx Slave;
+    private ControlSystem controller;
+
 
     public static final int POSE_LOW = 0;
     public static final int POSE_MIDDLE = 500;
@@ -26,20 +29,27 @@ public class LiftShoulder implements Subsystem {
         Slave = new MotorEx(hwMap.get(DcMotorEx.class, "Slave"));
 
         Slave.setPower(Master.getPower());
-    }
-    public ControlSystem controlSystem = ControlSystem.builder()
-            .posPid(0.2, 0.0, 0.0)
-            .elevatorFF(0.0)
-            .build();
 
-    public Command tryThis(){
-        return new InstantCommand(() -> Master.setPower(0.2));
+        controller = ControlSystem.builder()
+                .posPid(0.2, 0.0, 0.0)
+                .elevatorFF(0.0)
+                .build();
+
+        controller.setGoal(new KineticState(0.0));
+    }
+
+    public void goToPosition(double toPose) {
+        controller.setGoal(new KineticState(toPose));
+    }
+
+    public Command toHigh(){
+        return new InstantCommand(() -> goToPosition(POSE_HIGH));
     }
     public Command toMiddle(){
-        return new InstantCommand(() -> Master.atPosition(POSE_MIDDLE));
+        return new InstantCommand(() -> goToPosition(POSE_MIDDLE));
     }
     public Command toLow(){
-        return new InstantCommand(() -> Master.atPosition(POSE_LOW));
+        return new InstantCommand(() -> goToPosition(POSE_LOW));
     }
 
     public Command toSetPoint(int setpoint) {

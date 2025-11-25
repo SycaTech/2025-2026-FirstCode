@@ -20,6 +20,8 @@ public class TransferTeleop extends OpMode {
     public void init() {
         transfer.init(hardwareMap);
         toShoot.init(hardwareMap);
+
+
     }
 
     @Override

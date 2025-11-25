@@ -19,7 +19,7 @@ public class Star_Indexer{
     }
 
     public ControlSystem controlSystem = ControlSystem.builder()
-            .posPid(0,0,0)
+            .posPid(0.005,0,0)
             .elevatorFF(0)
             .build();
 
