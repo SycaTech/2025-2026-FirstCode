@@ -12,7 +12,7 @@ import dev.nextftc.core.commands.CommandManager;
 
 public class ShootingTeleop extends OpMode {
     AngleChanger angleChanger = new AngleChanger();
-    Shooter shooter = new Shooter();
+    Shooter shooter = Shooter.INSTANCE;
 
     private double currentAngle = 0.5;
     private final double step = 0.05;

@@ -8,13 +8,15 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.subsystems.Shooting.Shooter;
 
 import dev.nextftc.core.commands.Command;
 import dev.nextftc.core.commands.utility.InstantCommand;
 import dev.nextftc.hardware.impl.MotorEx;
 
 public class MecanumDrive {
-
+    public static final MecanumDrive INSTANCE = new MecanumDrive();
+    private MecanumDrive() {}
     private MotorEx frontLeftMotor,frontRightMotor,backLeftMotor,backRightMotor;
     private IMU imu;
 
