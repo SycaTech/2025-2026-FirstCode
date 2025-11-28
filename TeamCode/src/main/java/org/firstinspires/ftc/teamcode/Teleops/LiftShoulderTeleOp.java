@@ -8,6 +8,8 @@ import dev.nextftc.core.commands.CommandManager;
 
 import static dev.nextftc.bindings.Bindings.button;
 
+import android.transition.Slide;
+
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.subsystems.LiftShoulder;
 
@@ -23,9 +25,7 @@ public class LiftShoulderTeleOp extends OpMode {
 
     @Override
     public void loop() {
-//        liftShoulder.periodic();
-
-        liftShoulder.power(0.5);
+    }
 
 //        Button Y = button(() -> gamepad1.y);
 //        Y.whenBecomesTrue(() -> liftShoulder.toHigh().schedule());
