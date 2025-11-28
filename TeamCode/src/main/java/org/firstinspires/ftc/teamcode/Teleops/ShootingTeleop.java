@@ -14,18 +14,38 @@ public class ShootingTeleop extends OpMode {
     AngleChanger angleChanger = new AngleChanger();
     Shooter shooter = new Shooter();
 
+    private double currentAngle = 0.5;
+    private final double step = 0.05;
+
     @Override
     public void init() {
         angleChanger.init(hardwareMap);
         shooter.init(hardwareMap);
+        angleChanger.setServoPos(currentAngle);
     }
 
     @Override
     public void loop() {
-        Button ChangeAngel = button(() -> gamepad1.dpad_down);
-        ChangeAngel.whenTrue(() -> angleChanger.changeAngle(-1));
-        ChangeAngel.whenFalse(() -> angleChanger.changeAngle(1));
+        //Angle Change
+        Button DpadDown = button(() -> gamepad1.dpad_down);
+        DpadDown.whenBecomesTrue(() -> {
+            currentAngle -= step;
+            if (currentAngle < 0.0) currentAngle = 0.0;
+            angleChanger.setServoPos(currentAngle);
+        });
 
-        CommandManager.INSTANCE.scheduleCommand(shooter.Shoot());
+        Button DpadUp = button(() -> gamepad1.dpad_up);
+        DpadUp.whenBecomesTrue(() -> {
+            currentAngle += step;
+            if (currentAngle > 1.0) currentAngle = 1.0;
+            angleChanger.setServoPos(currentAngle);
+        });
+
+        //Shooter
+        Button A  = button(() -> gamepad1.a);
+        A.whenTrue(() -> shooter.shoot())
+         .whenFalse(() -> shooter.stop());
+
+        shooter.update();
     }
 }

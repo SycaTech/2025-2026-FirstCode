@@ -23,7 +23,6 @@ public class LiftShoulder implements Subsystem {
 
     public String NameMaster = "Master";
     public String NameSlave = "Slave";
-    
 
     public static final int POSE_LOW = 0;
     public static final int POSE_MIDDLE = 500;
