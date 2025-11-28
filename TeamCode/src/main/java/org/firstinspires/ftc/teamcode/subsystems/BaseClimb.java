@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import android.health.connect.datatypes.units.Power;
+
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import dev.nextftc.control.ControlSystem;
@@ -9,7 +11,8 @@ import dev.nextftc.hardware.impl.MotorEx;
 
 public class BaseClimb {
     private MotorEx telescope;
-
+    double MaxPower = 1.0;
+    double MinimumPower = 0.0;
     public static final int ClosedPos = 0;
     public static final int OpenPos = 180;
 
@@ -25,12 +28,18 @@ public class BaseClimb {
     public Command OpenTelescope() {
         return new InstantCommand(() -> {
             telescope.atPosition(OpenPos);
+            power(MaxPower);
+
         });
     }
 
     public Command CloseTelescope() {
         return new InstantCommand(() -> {
-            telescope.atPosition(ClosedPos);
+            telescope.setCurrentPosition(ClosedPos);
+            power(MinimumPower);
         });
+    }
+    public void power(double power){
+        telescope.setPower(power);
     }
 }

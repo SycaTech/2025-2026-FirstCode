@@ -35,11 +35,9 @@ public class TransferTeleop extends OpMode {
         Button BALL3_BTN = button(() -> gamepad1.dpad_right); //rotate to ball 3 pos
         BALL3_BTN.whenBecomesTrue(() -> transfer.Ball3());
 
-        if (gamepad1.a) {
-            toShoot.setServoPos(-1.0); // move ball to the shooter
-        }
-        else {
-            toShoot.setServoPos(1.0);
-        }
+
+        Button A = button(() -> gamepad1.a);
+        A.whenTrue(() -> toShoot.setServoPos(-1.0))
+                .whenFalse(() -> toShoot.setServoPos(1.0));
     }
 }
