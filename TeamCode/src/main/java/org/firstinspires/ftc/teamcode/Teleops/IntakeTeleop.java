@@ -11,19 +11,19 @@ import dev.nextftc.bindings.Button;
 
 @TeleOp(name = "IntakeTeleop")
 public class IntakeTeleop extends OpMode {
-    Intake Intake = new Intake();
+    Intake intake = Intake.INSTANCE;
 
 
     @Override
     public void init() {
-        Intake.init(hardwareMap);
+        intake.init(hardwareMap);
     }
 
     @Override
     public void loop() {
         Button A = button(() -> gamepad1.a);
         A.whenBecomesTrue(() -> {
-            Intake.intake();
+            intake.intake();
         });
     }
 }

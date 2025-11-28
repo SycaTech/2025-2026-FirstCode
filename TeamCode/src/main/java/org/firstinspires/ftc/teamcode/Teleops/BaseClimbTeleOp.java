@@ -3,13 +3,15 @@ package org.firstinspires.ftc.teamcode.Teleops;
 import static dev.nextftc.bindings.Bindings.button;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.subsystems.BaseClimb;
 
 import dev.nextftc.bindings.Button;
 
+@TeleOp(name = "BaseClimb")
 public class BaseClimbTeleOp extends OpMode {
-    BaseClimb baseClimb = new BaseClimb();
+    private BaseClimb baseClimb = BaseClimb.INSTANCE;
 
     @Override
     public void init() {
@@ -18,10 +20,12 @@ public class BaseClimbTeleOp extends OpMode {
 
     @Override
     public void loop() {
-        Button RightBumper = button(() -> gamepad1.right_bumper);
-        RightBumper.whenBecomesTrue(() -> baseClimb.OpenTelescope());
+        Button rightBumper = button(() -> gamepad1.right_bumper);
+        rightBumper.whenBecomesTrue(() -> baseClimb.OpenTelescope());
 
-        Button LeftBumper = button(() -> gamepad1.left_bumper);
-        LeftBumper.whenBecomesTrue(() -> baseClimb.CloseTelescope());
+        Button leftBumper = button(() -> gamepad1.left_bumper);
+        leftBumper.whenBecomesTrue(() -> baseClimb.CloseTelescope());
+
+        baseClimb.update();
     }
 }
