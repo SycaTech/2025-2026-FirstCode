@@ -21,11 +21,9 @@ public class IntakeTeleop extends OpMode {
 
     @Override
     public void loop() {
-        Button rightTrigger = button(() -> gamepad1.right_trigger > 0.1);
-        rightTrigger.whenTrue(() -> {
-            double power = gamepad1.right_trigger;
-            Intake.intake(power);
+        Button A = button(() -> gamepad1.a);
+        A.whenBecomesTrue(() -> {
+            Intake.intake();
         });
-
     }
 }
