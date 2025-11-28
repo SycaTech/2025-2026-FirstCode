@@ -16,11 +16,11 @@ import org.firstinspires.ftc.teamcode.subsystems.LiftShoulder;
 @TeleOp(name = "LiftShoulder TeleOp")
 public class LiftShoulderTeleOp extends OpMode {
 
-    LiftShoulder liftShoulder = new LiftShoulder();
+//    LiftShoulder liftShoulder = new LiftShoulder();
 
     @Override
     public void init() {
-        liftShoulder.init(hardwareMap);
+//        liftShoulder.init(hardwareMap);
     }
 
     @Override
@@ -57,4 +57,4 @@ public class LiftShoulderTeleOp extends OpMode {
 //            liftShoulder.toSetPoint(250);
 //        }
     }
-}
+
