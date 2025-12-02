@@ -18,6 +18,8 @@ import dev.nextftc.hardware.impl.MotorEx;
 public class LiftShoulder implements Subsystem {
     public static final LiftShoulder INSTANCE = new LiftShoulder();
     private LiftShoulder() {}
+    public ControlSystem controller;
+
     public MotorEx Master;
     private MotorEx Slave;
 
@@ -33,13 +35,13 @@ public class LiftShoulder implements Subsystem {
         Slave = new MotorEx(NameSlave);
     }
     public Command toHigh(){
-        return new RunToPosition(controller,POSE_HIGH);
+        return new RunToPosition(controller, POSE_HIGH);
     }
     public Command toMiddle(){
-        return new RunToPosition(controller,POSE_MIDDLE);
+        return new RunToPosition(controller, POSE_MIDDLE);
     }
     public Command toLow(){
-        return new RunToPosition(controller,POSE_LOW);
+        return new RunToPosition(controller, POSE_LOW);
     }
 
     public Command toSetPoint(int setpoint) {
