@@ -1,15 +1,10 @@
-<<<<<<< HEAD
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import com.pedropathing.control.PIDFController;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import dev.nextftc.control.ControlSystem;
-import dev.nextftc.control.KineticState;
-import dev.nextftc.control.feedforward.BasicFeedforward;
 import dev.nextftc.core.commands.Command;
 import dev.nextftc.core.commands.utility.InstantCommand;
 import dev.nextftc.core.subsystems.Subsystem;
@@ -19,10 +14,14 @@ import dev.nextftc.hardware.impl.MotorEx;
 public class LiftShoulder implements Subsystem {
     public static final LiftShoulder INSTANCE = new LiftShoulder();
     private LiftShoulder() {}
-    public ControlSystem controller;
 
-    public MotorEx Master;
+    private MotorEx Master;
     private MotorEx Slave;
+
+    private final ControlSystem controller = ControlSystem.builder()
+            .posPid(0.005, 0,0)
+            .elevatorFF(0)
+            .build();
 
     public String NameMaster = "Master";
     public String NameSlave = "Slave";
@@ -31,81 +30,30 @@ public class LiftShoulder implements Subsystem {
     public static final int POSE_MIDDLE = 500;
     public static final int POSE_HIGH = 1200;
 
-    public void init(HardwareMap hwMap) {
+    public void init() {
         Master = new MotorEx(NameMaster);
         Slave = new MotorEx(NameSlave);
+
+        Master.setPower(controller.calculate(
+        ));
     }
-    public Command toHigh(){
-        return new RunToPosition(controller, POSE_HIGH);
+
+    public Command toLow = new RunToPosition(controller, POSE_LOW).requires(this);
+    public Command toMiddle = new RunToPosition(controller, POSE_MIDDLE).requires(this);
+    public Command toHigh = new RunToPosition(controller, POSE_HIGH).requires(this);
+    public Command d(){
+        return new InstantCommand(()-> {Master.atPosition(300);});
     }
-    public Command toMiddle(){
-        return new RunToPosition(controller, POSE_MIDDLE);
-    }
-    public Command toLow(){
-        return new RunToPosition(controller, POSE_LOW);
-    }
+
+
 
     public Command toSetPoint(int setpoint) {
         return new InstantCommand(()-> Master.atPosition(setpoint));
     }
 
     public void periodic() {
+        Master.setPower(controller.calculate(Master.getState()));
         Slave.setPower(Master.getPower());
     }
 
 }
-=======
-//package org.firstinspires.ftc.teamcode.subsystems;
-//
-//import com.pedropathing.control.PIDFController;
-//import com.qualcomm.robotcore.hardware.DcMotorEx;
-//import com.qualcomm.robotcore.hardware.HardwareMap;
-//
-//import org.firstinspires.ftc.robotcore.external.Telemetry;
-//
-//import dev.nextftc.control.ControlSystem;
-//import dev.nextftc.control.KineticState;
-//import dev.nextftc.control.feedforward.BasicFeedforward;
-//import dev.nextftc.core.commands.Command;
-//import dev.nextftc.core.commands.utility.InstantCommand;
-//import dev.nextftc.core.subsystems.Subsystem;
-//import dev.nextftc.hardware.controllable.RunToPosition;
-//import dev.nextftc.hardware.impl.MotorEx;
-//
-//public class LiftShoulder implements Subsystem {
-//    public static final LiftShoulder INSTANCE = new LiftShoulder();
-//    private LiftShoulder() {}
-//    public MotorEx Master;
-//    private MotorEx Slave;
-//
-//    public String NameMaster = "Master";
-//    public String NameSlave = "Slave";
-//
-//    public static final int POSE_LOW = 0;
-//    public static final int POSE_MIDDLE = 500;
-//    public static final int POSE_HIGH = 1200;
-//
-//    public void init(HardwareMap hwMap) {
-//        Master = new MotorEx(NameMaster);
-//        Slave = new MotorEx(NameSlave);
-//    }
-//    public Command toHigh(){
-//        return new RunToPosition(controller,POSE_HIGH);
-//    }
-//    public Command toMiddle(){
-//        return new RunToPosition(controller,POSE_MIDDLE);
-//    }
-//    public Command toLow(){
-//        return new RunToPosition(controller,POSE_LOW);
-//    }
-//
-//    public Command toSetPoint(int setpoint) {
-//        return new InstantCommand(()-> Master.atPosition(setpoint));
-//    }
-//
-//    public void periodic() {
-//        Slave.setPower(Master.getPower());
-//    }
-//
-//}
->>>>>>> 112345c237366188899fd4cebcbe20a9df2505ee
