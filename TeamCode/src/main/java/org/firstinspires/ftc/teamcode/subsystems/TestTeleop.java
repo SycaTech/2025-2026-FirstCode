@@ -12,6 +12,7 @@ import dev.nextftc.hardware.impl.MotorEx;
 
 @TeleOp(name = "TestTeleop")
 public class TestTeleop extends NextFTCOpMode {
+    private MotorEx motor = new MotorEx("Slave");
     public TestTeleop() {
         addComponents(
                 BulkReadComponent.INSTANCE,
@@ -19,7 +20,7 @@ public class TestTeleop extends NextFTCOpMode {
         );
     }
 
-    private MotorEx motor = new MotorEx("Slave");
+
 
     @Override
     public void onStartButtonPressed() {
@@ -27,7 +28,9 @@ public class TestTeleop extends NextFTCOpMode {
                 .whenBecomesTrue(() -> motor.setPower(0.6))
                 .whenBecomesFalse(() -> motor.setPower(0));
 
-
+        Gamepads.gamepad1().a()
+                .whenBecomesTrue(() -> motor.setPower(-0.6))
+                .whenBecomesFalse(() -> motor.setPower(0));
 
     }
 
