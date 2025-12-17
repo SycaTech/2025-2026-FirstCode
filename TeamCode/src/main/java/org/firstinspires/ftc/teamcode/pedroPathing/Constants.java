@@ -32,8 +32,12 @@ public class Constants {
             .leftRearEncoderDirection(Encoder.FORWARD)
             .rightFrontEncoderDirection(Encoder.FORWARD)
             .rightRearEncoderDirection(Encoder.FORWARD)
-            .robotWidth(10.236)
-            .robotLength(11.89);
+            .robotWidth(16.5)
+            .robotLength(17.75)
+            .forwardTicksToInches(2.0)
+            .strafeTicksToInches(14.2)
+            .turnTicksToInches(12.32);
+    
 
 
     public static PathConstraints pathConstraints = new PathConstraints(
