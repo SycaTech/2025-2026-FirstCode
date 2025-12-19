@@ -1,63 +1,69 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import dev.nextftc.control.ControlSystem;
 import dev.nextftc.core.commands.Command;
 import dev.nextftc.core.commands.utility.InstantCommand;
 import dev.nextftc.core.subsystems.Subsystem;
-import dev.nextftc.hardware.controllable.MotorGroup;
-import dev.nextftc.hardware.controllable.RunToPosition;
-import dev.nextftc.hardware.impl.MotorEx;
-import dev.nextftc.hardware.positionable.SetPosition;
-import dev.nextftc.hardware.positionable.SetPositions;
 
 public class LiftShoulder implements Subsystem {
+
     public static final LiftShoulder INSTANCE = new LiftShoulder();
-    private LiftShoulder() {}
 
-    private MotorEx Master;
-    private MotorEx Slave;
+    public final String MOTOR_LEFT_NAME = "LF";
+    public final String MOTOR_RIGHT_NAME = "Slave";
 
-    private final ControlSystem controller = ControlSystem.builder()
-            .posPid(0.005, 0,0)
+    public DcMotor motorLeft;
+    public DcMotor motorRight;
+
+    public static final int POSE_LOW = -200;
+    public static final int POSE_MIDDLE = 0;
+    public static final int POSE_HIGH = 500;
+
+
+    private LiftShoulder() {
+        motorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        motorLeft.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        motorRight.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+
+        motorRight.setPower(0);
+    }
+
+    public ControlSystem controlSystem = ControlSystem.builder()
+            .posPid(0.005, 0.0001, 0.0)
+            .elevatorFF(0.1)
             .build();
 
-    public String NameMaster = "LF";
-    public String NameSlave = "LR";
-
-    public static final int POSE_LOW = 0;
-    public static final int POSE_MIDDLE = 500;
-    public static final int POSE_HIGH = 1200;
-    MotorGroup mm = new MotorGroup(Master , Slave);
-
-    public void init() {
-
-        Master = new MotorEx(NameMaster).zeroed();
-        Slave = new MotorEx(NameSlave).reversed().zeroed();
-
-
-
+//    public Command toMiddle = new RunToPosition(controlSystem, POSE_MIDDLE);
+//    public Command toHigh = new RunToPosition(controlSystem, POSE_HIGH);
+//
+    public Command toHigh(){
+        return new InstantCommand(() -> {
+            motorLeft.setTargetPosition(POSE_HIGH);
+        });
     }
-
-    public Command toLow = new RunToPosition(controller, POSE_LOW).requires(this);
-    public Command toMiddle = new RunToPosition(controller, POSE_MIDDLE).requires(this);
-    public Command toHigh = new RunToPosition(controller, POSE_HIGH).requires(this);
-    public Command d(){
-        return new InstantCommand(()-> {Master.atPosition(300);});
+    public Command toMiddle(){
+        return new InstantCommand(() -> {
+            motorLeft.setTargetPosition(POSE_MIDDLE);
+        });
     }
-
+    public Command toLow(){
+        return new InstantCommand(() -> {
+            motorLeft.setTargetPosition(POSE_LOW);
+        });
+    }
 
     public Command toSetPoint(int setpoint) {
-        return new InstantCommand(()-> Master.atPosition(setpoint));
+        return new InstantCommand(()->{motorLeft.setTargetPosition(setpoint);});
     }
 
-
+    @Override
     public void periodic() {
-        mm.setPower(controller.calculate(Master.getState()));
-
+        motorRight.setPower(motorLeft.getPower());
     }
-
 }
