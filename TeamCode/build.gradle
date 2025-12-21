@@ -26,6 +26,10 @@ android {
 dependencies {
     implementation project(':FtcRobotController')
     annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
+// Pedro Pathing Core Library (Required for com.pedropathing.follower.*)
+    implementation 'com.pedropathing:ftc:2.1.2'
+
+    implementation 'dev.nextftc.extensions:pedro:1.0.1'
 
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.7'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.4.21'
