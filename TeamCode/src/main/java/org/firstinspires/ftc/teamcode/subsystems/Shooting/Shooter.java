@@ -24,6 +24,8 @@ public class Shooter implements Subsystem {
                 .basicFF(0.02, 0.0, 0.01)
                 .build();
     }
+    public Command toLow = new RunToPosition(controlSystem, 0).requires(this);
+    public Command toHigh = new RunToPosition(controlSystem, 1200).requires(this);
 
     public void update() {
         if (shooter == null || controller == null) return;
