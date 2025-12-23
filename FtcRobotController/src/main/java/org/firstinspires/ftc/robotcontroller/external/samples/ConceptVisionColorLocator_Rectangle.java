@@ -21,6 +21,7 @@
 
 package org.firstinspires.ftc.robotcontroller.external.samples;
 
+import android.annotation.SuppressLint;
 import android.util.Size;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -68,6 +69,7 @@ import java.util.List;
 @TeleOp(name = "Concept: Color-Locator (Rectangle)", group = "Concept")
 public class ConceptVisionColorLocator_Rectangle extends LinearOpMode
 {
+    @SuppressLint("DefaultLocale")
     @Override
     public void runOpMode()
     {

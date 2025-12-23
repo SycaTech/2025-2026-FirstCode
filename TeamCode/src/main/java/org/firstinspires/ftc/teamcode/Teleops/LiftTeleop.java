@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Lift.Lift;
 
 import dev.nextftc.bindings.Button;
-import dev.nextftc.core.components.BindingsComponent;
+import dev.nextftc.bindings.BindingsComponent;
 import dev.nextftc.core.components.SubsystemComponent;
 import dev.nextftc.ftc.NextFTCOpMode;
 import dev.nextftc.ftc.components.BulkReadComponent;
