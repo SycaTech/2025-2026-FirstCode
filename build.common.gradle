@@ -20,8 +20,8 @@ import java.util.regex.Pattern
 apply plugin: 'com.android.application'
 
 android {
-3
-    compileSdkVersion 36
+
+    compileSdk 34
 
     signingConfigs {
         release {
@@ -45,6 +45,10 @@ android {
             storeFile rootProject.file('libs/ftc.debug.keystore')
             storePassword 'android'
         }
+    }
+
+    aaptOptions {
+        noCompress "tflite"
     }
 
     defaultConfig {
@@ -107,10 +111,11 @@ android {
     }
 
     packagingOptions {
-        pickFirst '*/.so'
+        pickFirst '**/*.so'
     }
     ndkVersion '21.3.6528147'
 }
 
 repositories {
 }
+
