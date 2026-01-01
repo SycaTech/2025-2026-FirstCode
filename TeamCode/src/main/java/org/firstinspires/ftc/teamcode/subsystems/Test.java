@@ -8,7 +8,7 @@ import dev.nextftc.hardware.impl.MotorEx;
 public class Test {
     private DcMotor motorex;
     public Test(HardwareMap hardwareMap) {
-        motorex = hardwareMap.get(DcMotor.class, "Slave");
+        motorex = hardwareMap.get(DcMotor.class, "Lift");
         motorex.setPower(0);
     }
 
