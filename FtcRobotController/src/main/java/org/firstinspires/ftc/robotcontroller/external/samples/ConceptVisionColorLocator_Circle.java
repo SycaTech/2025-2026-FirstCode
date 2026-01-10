@@ -24,6 +24,7 @@ package org.firstinspires.ftc.robotcontroller.external.samples;
 import android.graphics.Color;
 import android.util.Size;
 
+import com.google.android.gms.maps.model.Circle;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
