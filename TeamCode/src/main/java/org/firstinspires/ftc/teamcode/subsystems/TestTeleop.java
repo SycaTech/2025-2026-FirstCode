@@ -12,7 +12,7 @@ import dev.nextftc.hardware.impl.MotorEx;
 
 @TeleOp(name = "TestTeleop")
 public class TestTeleop extends NextFTCOpMode {
-    private MotorEx motor = new MotorEx("Slave");
+    private MotorEx motor = new MotorEx("Lift");
     public TestTeleop() {
         addComponents(
                 BulkReadComponent.INSTANCE,
